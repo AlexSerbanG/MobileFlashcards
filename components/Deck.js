@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Deck extends React.Component {
   render() {
-    const { title, questions, navigate } = this.props;
+    const { title, questions, navigate, deleteDeck } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -18,7 +18,7 @@ class Deck extends React.Component {
           <TouchableOpacity>
             <Text style={styles.startBtn}>Start quiz</Text>
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={deleteDeck}>
             <Text style={styles.deleteBtn}>Delete Deck</Text>
           </TouchableOpacity>
         </View>

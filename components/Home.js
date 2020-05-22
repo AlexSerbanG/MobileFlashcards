@@ -11,6 +11,7 @@ const Tab = createBottomTabNavigator();
 
 class Home extends React.Component {
   render() {
+    const { addDeck } = this.props;
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -38,7 +39,9 @@ class Home extends React.Component {
         <Tab.Screen name="Decks">
           {({ navigation }) => <DeckList decks={this.props.decks} navigate={navigation.navigate} />}
         </Tab.Screen>
-        <Tab.Screen name="New Deck" component={NewDeck} />
+        <Tab.Screen name="New Deck">
+          {({ navigation }) => <NewDeck handleSubmit={addDeck} navigate={navigation.navigate} />}
+        </Tab.Screen>
       </Tab.Navigator>
     );
   }

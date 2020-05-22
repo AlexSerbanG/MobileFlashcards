@@ -23,19 +23,55 @@ class App extends React.Component {
     })
   }
 
+  addQuestion = (deckId, question) => {
+    this.setState(prevState => ({
+      decks: {
+        ...prevState.decks,
+        [deckId]: {
+          ...prevState.decks[deckId],
+          questions: [...prevState.decks[deckId].questions, question]
+        }
+      }
+    }))
+  }
+
+  deleteDeck = (deckId) => {
+    this.setState(({ decks: { [deckId]: toRemove, ...rest } }) => ({ decks: rest }));
+  }
+
+  addDeck = (deckId) => {
+    this.setState(prevState => ({
+      decks: {
+        ...prevState.decks,
+        [deckId]: {
+          title: deckId,
+          questions: []
+        }
+      }
+    }));
+  }
+
   render() {
     const { decks, isReady } = this.state;
     return (
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home">
-            {() => <Home decks={decks} />}
+            {() => <Home decks={decks} addDeck={this.addDeck} />}
           </Stack.Screen>
           <Stack.Screen name="Deck">
-            {({ route: { params }, navigation }) => <Deck navigate={navigation.navigate} {...decks[params.deckId]} />}
+            {({ route: { params }, navigation }) =>
+              <Deck
+                navigate={navigation.navigate}
+                deleteDeck={() => {
+                  this.deleteDeck(params.deckId);
+                  navigation.navigate("Home")
+                }}
+                {...decks[params.deckId]}
+              />}
           </Stack.Screen>
           <Stack.Screen name="New Question">
-            {({ route: { params } }) => <NewQuestion {...decks[params.deckId]} />}
+            {({ route: { params }, navigation }) => <NewQuestion navigate={navigation.navigate} deckId={params.deckId} handleSubmit={(question) => this.addQuestion(params.deckId, question)} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
