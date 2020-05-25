@@ -15,9 +15,11 @@ class Deck extends React.Component {
           <TouchableOpacity onPress={() => navigate("New Question", { deckId: title })}>
             <Text style={styles.addBtn}>Add Card</Text>
           </TouchableOpacity >
-          <TouchableOpacity>
+          { questions.length > 0 &&
+          <TouchableOpacity onPress={() => navigate("Quiz", { deckId: title })}>
             <Text style={styles.startBtn}>Start quiz</Text>
           </TouchableOpacity>
+          }
           <TouchableOpacity onPress={deleteDeck}>
             <Text style={styles.deleteBtn}>Delete Deck</Text>
           </TouchableOpacity>

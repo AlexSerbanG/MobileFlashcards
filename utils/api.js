@@ -1,18 +1,49 @@
-import mockDecks from './mockData';
-import { AsyncStorage } from 'react-native';
+import mockDecks from "./mockData";
+import { AsyncStorage } from "react-native";
+import { StorageKeys } from "./helpers";
 
-const StorageKeys = {
-  Decks: 'Decks',
-}
-
-export const getDecks = () => AsyncStorage.getItem(StorageKeys.Decks)
-  .then(result => {
+export const getDecks = () =>
+  AsyncStorage.getItem(StorageKeys.Decks).then((result) => {
     if (!result) {
-      return mockDecks;
+      return AsyncStorage.setItem(
+        StorageKeys.Decks,
+        JSON.stringify(mockDecks),
+        () => mockDecks
+      );
     }
     return JSON.parse(result);
   });
 
-export const getDeck = (id) => null;
-export const saveDeckTitle = (title) => null;
-export const addCardToDeck = ({ title, card }) => null;
+export const getDeck = (title) =>
+  AsyncStorage.getItem(StorageKeys.Decks)
+    .then(JSON.parse)
+    .then((data) => data[title]);
+
+export const saveDeckTitle = (title) =>
+  AsyncStorage.mergeItem(
+    StorageKeys.Decks,
+    JSON.stringify({
+      [title]: {
+        title,
+        questions: [],
+      },
+    })
+  );
+
+export const addCardToDeck = ({ title, card }) =>
+  AsyncStorage.mergeItem(
+    StorageKeys.Decks,
+    JSON.stringify({
+      [title]: {
+        title,
+        questions: [card],
+      },
+    })
+  );
+
+export const removeDeck = (title) =>
+  getDecks().then(({ [title]: toRemove, ...rest }) => {
+    AsyncStorage.removeItem(StorageKeys.Decks).then(() =>
+      AsyncStorage.setItem(StorageKeys.Decks, JSON.stringify(rest))
+    );
+  });

@@ -5,7 +5,6 @@ import DeckList from '../components/DeckList';
 import NewDeck from '../components/NewDeck';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getDecks } from '../utils/api';
 
 const Tab = createBottomTabNavigator();
 

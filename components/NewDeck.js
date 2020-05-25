@@ -24,7 +24,7 @@ class NewDeck extends React.Component {
       <View style={styles.container}>
         <TextInput placeholder="Deck title" value={title} onChangeText={this.handleChange} style={styles.input} />
         <TouchableOpacity onPress={this.handleSubmit}>
-          <Text style={styles.submitBtn}>Submit</Text>
+          <Text style={styles.submitBtn}>Create Deck</Text>
         </TouchableOpacity>
       </View>
     )
