@@ -7,9 +7,8 @@ export const getDecks = () =>
     if (!result) {
       return AsyncStorage.setItem(
         StorageKeys.Decks,
-        JSON.stringify(mockDecks),
-        () => mockDecks
-      );
+        JSON.stringify(mockDecks)
+      ).then(() => mockDecks);
     }
     return JSON.parse(result);
   });

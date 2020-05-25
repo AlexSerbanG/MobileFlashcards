@@ -17,7 +17,6 @@ const Stack = createStackNavigator();
 
 class App extends React.Component {
   state = {
-    isReady: false,
     decks: {},
   };
 
@@ -26,9 +25,8 @@ class App extends React.Component {
     getDecks().then((results) => {
       this.setState({
         decks: results,
-        isReady: true,
       });
-    })
+    });
   }
 
   addQuestion = (deckId, question) => {
@@ -44,7 +42,7 @@ class App extends React.Component {
             questions: [...prevState.decks[deckId].questions, question],
           },
         },
-      }))
+      }));
     });
   };
 

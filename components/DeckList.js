@@ -38,7 +38,6 @@ export default DeckList;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     padding: 40,
     justifyContent: 'flex-start',
     alignItems: 'center'
@@ -64,6 +63,5 @@ const styles = StyleSheet.create({
   },
   counter: {
     flex: 1
-
   }
 });
