@@ -26,7 +26,7 @@ class NewQuestion extends React.Component {
       <View style={styles.container}>
         <TextInput placeholder="Question" value={question} onChangeText={(val) => this.handleChange("question", val)} style={styles.questions} />
         <TextInput placeholder="Answer" value={answer} onChangeText={(val) => this.handleChange("answer", val)} style={styles.questions} />
-        <TouchableOpacity onPress={this.onSubmit}>
+        <TouchableOpacity onPress={this.onSubmit} disabled={question.length === 0 || answer.length === 0}>
           <Text style={styles.submitBtn}>Submit</Text>
         </TouchableOpacity>
       </View>
