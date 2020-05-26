@@ -69,7 +69,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { decks, isReady } = this.state;
+    const { decks } = this.state;
     return (
       <NavigationContainer>
         <Stack.Navigator>

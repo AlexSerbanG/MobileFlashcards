@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-
+import Score from "./Score";
+import Answer from "./Answer";
 class Quiz extends React.Component {
   state = {
     answers: [],
@@ -32,21 +33,16 @@ class Quiz extends React.Component {
 
   render() {
     const { answers, currentQuestionIndex, hasAnswered } = this.state;
-    const { questions } = this.props;
+    const { questions, goBack } = this.props;
     const hasFinished = answers.length === questions.length;
     if (hasFinished) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.score}>
-            SCORE: {answers.filter((a) => a).length} / {questions.length}
-          </Text>
-          <TouchableOpacity onPress={this.resetQuiz}>
-            <Text style={styles.submitBtn}>Restart Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.props.goBack}>
-            <Text style={styles.submitBtn}>Back to Deck</Text>
-          </TouchableOpacity>
-        </View>
+        <Score
+          correct={answers.filter((a) => a).length}
+          total={questions.length}
+          resetQuiz={this.resetQuiz}
+          goBack={goBack}
+        />
       );
     }
     const card = questions[currentQuestionIndex];
@@ -61,7 +57,6 @@ class Quiz extends React.Component {
         {hasAnswered && (
           <Answer answer={card.answer} answerCard={this.answerCard} />
         )}
-
         <Text>{questions.length - answers.length} questions remaining</Text>
       </View>
     );
@@ -69,18 +64,6 @@ class Quiz extends React.Component {
 }
 
 export default Quiz;
-
-const Answer = ({ answer, answerCard }) => (
-  <View style={styles.answer}>
-    <Text style={styles.answer}>{answer}</Text>
-    <TouchableOpacity onPress={() => answerCard(true)}>
-      <Text style={[styles.submitBtn, styles.correct]}>Correct</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => answerCard(false)}>
-      <Text style={[styles.submitBtn, styles.incorrect]}>Incorrect</Text>
-    </TouchableOpacity>
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {
@@ -92,19 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     padding: 20,
     marginBottom: 20,
-    textAlign: 'center',
-  },
-  answer: {
-    fontSize: 18,
-    padding: 20,
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  score: {
-    fontSize: 32,
-    padding: 20,
-    marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   submitBtn: {
     paddingVertical: 16,

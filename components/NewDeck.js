@@ -21,7 +21,7 @@ class NewDeck extends React.Component {
   handleSubmit = () => {
     const { navigate, handleSubmit } = this.props;
     handleSubmit(this.state.title);
-    navigate("Decks");
+    navigate("Deck", { deckId: this.state.title });
   };
 
   render() {
